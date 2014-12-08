@@ -10,8 +10,8 @@ sudo git clone https://github.com/RuudBurger/CouchPotatoServer.git
 # Copy/Download init scripts into /etc/init.d/
 sudo cp /opt/CouchPotatoServer/init/ubuntu /etc/init.d/couchpotato
 sudo cp /opt/SickRage/init.ubuntu /etc/init.d/sickrage
-sudo wget -P /etc/init.d/ https://markrawson.co.uk/dl/nzb-setup/init/sabnzbd
-sudo chmod 755 /etc/init.d/sabnzbd 
+sudo cp ~/nzb-install-script/init/sabnzbd /etc/init.d/
+sudo chmod 755 /etc/init.d/sabnzbd
 
 # Set sabnzbd, sickrage and couchpotato to start automatically
 sudo update-rc.d couchpotato defaults
@@ -31,9 +31,9 @@ sudo chown couchpotato:nzb /opt/CouchPotatoServer -cR
 
 # Download basic settings
 cd /etc/default/
-sudo wget https://markrawson.co.uk/dl/nzb-setup/sickbeard
-sudo wget https://markrawson.co.uk/dl/nzb-setup/couchpotato
-sudo wget https://markrawson.co.uk/dl/nzb-setup/sabnzbd
+sudo cp ~/nzb-install-script/default/sickbeard ./
+sudo cp ~/nzb-install-script/default/couchpotato ./
+sudo cp ~/nzb-install-script/default/sabnzbd ./
 
 # Create media directory
 sudo mkdir /home/media
@@ -44,5 +44,4 @@ sudo service sabnzbd start
 sudo service couchpotato start
 sudo service sickrage start
 
-# Output SABnzbd API key for setting up sickrage and couchpotato
 echo "SABnzbd API key: " `sudo awk -F " = " '/^api_key/ {print $2}' $CONFIG`

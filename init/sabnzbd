@@ -1,0 +1,46 @@
+#!/bin/sh
+#
+### BEGIN INIT INFO
+# Provides:          sabnzbd
+# Required-Start:    $local_fs $network $remote_fs
+# Required-Stop:     $local_fs $network $remote_fs
+# Should-Start:      $NetworkManager
+# Should-Stop:       $NetworkManager
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: starts instance of SABnzbd
+# Description:       starts instance of SABnzbd using start-stop-daemon
+### END INIT INFO
+
+NAME=sabnzbd
+
+# Source sabnzbd configuration
+if [ -f /etc/default/$NAME ]; then
+    . /etc/default/$NAME
+else
+    echo "/etc/default/$NAME not found using default settings.";
+fi
+
+DESC=SABnzbd
+HOME=${SAB_HOME-/opt/sabnzbd}
+CONFIG=${SAB_CONFIG-/opt/sabnzbd/config.ini}
+HOST=${SAB_HOST-localhost}
+PORT=${SAB_PORT-8080}
+RUN_AS=${SAB_USER-sabnzbd}
+API_KEY=`sudo awk -F " = " '/^api_key/ {print $2}' $CONFIG`
+
+case "$1" in
+start)
+  echo "Starting SABnzbd."
+  /usr/bin/sudo -u $RUN_AS -H $HOME/SABnzbd.py -d -s $HOST:$PORT -f $CONFIG
+;;
+stop)
+  echo "Shutting down SABnzbd."
+  /usr/bin/wget -q --delete-after "http://localhost:$PORT/sabnzbd/api?mode=shutdown&apikey=$API_KEY"
+;;
+*)
+  echo "Usage: $0 {start|stop}"
+  exit 1
+esac
+
+exit 0

@@ -1,0 +1,5 @@
+SB_USER=sickrage
+SB_HOME=/opt/SickRage
+SB_DATA=/opt/SickRage
+SB_PIDFILE=/var/run/sickrage/sickrage.pid
+SSD_OPTS=" --group=nzb"

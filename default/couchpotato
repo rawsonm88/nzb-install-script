@@ -1,0 +1,4 @@
+CP_USER=couchpotato
+CP_HOME=/opt/CouchPotatoServer
+CP_DATA=/opt/CouchPotatoServer
+SSD_OPTS=" --group=nzb"

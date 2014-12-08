@@ -1,3 +1,4 @@
+#!/bin/sh
 # Install dependencies
 sudo apt-get install git-core python python-cheetah unzip unrar par2
 

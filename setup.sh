@@ -44,9 +44,17 @@ sudo service sabnzbd start
 sudo service couchpotato start
 sudo service sickrage start
 
+# Delay 5 seconds to ensure services are started and initial sabnzbd configuration is created
 for i in 5 4 3 2 1
 do
    sleep 1;
    echo "Please wait...$i seconds remaining"
 done
-echo "SABnzbd API key: " `sudo awk -F " = " '/^api_key/ {print $2}' $CONFIG`
+
+echo ""
+
+# Print SABnzbd
+echo "SABnzbd API key: " `sudo awk -F " = " '/^api_key/ {print $2}' /opt/sabnzbd/config.ini`
+
+echo ""
+echo "Happy configuring!"
